@@ -165,7 +165,7 @@ ul {
 /* Theme Switcher */
 .theme-switcher {
     position: relative;
-    margin-left: 1rem;
+    margin-left: auto;
 }
 
 .theme-toggle {
@@ -824,6 +824,10 @@ ul {
 @media (max-width: 768px) {
     .nav-links {
         display: none;
+    }
+    
+    .theme-switcher {
+        margin-left: 0;
     }
     
     .hero-title {

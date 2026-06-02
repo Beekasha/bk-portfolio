@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoloTrainer | Music practice app for Mac &amp; Windows</title>
+    <meta name="description" content="SoloTrainer is a desktop practice app for musicians — slow any track down without changing pitch, transpose without changing speed, set A–B loops, and drill the hard parts. Free for Mac &amp; Windows.">
+    <meta property="og:title" content="SoloTrainer — Slow it down. Nail the part.">
+    <meta property="og:description" content="A desktop practice app for musicians. Time-stretch and pitch-shift any track, loop the tricky bars, and learn it by ear. Free for Mac &amp; Windows.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://beeks.dev/solotrainer">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="solotrainer.css">
+</head>
+<body>
+    <!-- Cursor glow effect -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Platform icon templates (cloned into download buttons by JS) -->
+    <template id="iconApple">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.377 0-2.332-1.26-3.428-2.8-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.85-1.01.613 0 2.792.06 4.22 2.12-.11.07-2.358 1.38-2.358 4.13 0 3.21 2.852 4.34 2.927 4.36z"/></svg>
+    </template>
+    <template id="iconWin">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+    </template>
+
+    <!-- Navigation -->
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-content">
+            <a href="../" class="nav-logo">BK</a>
+            <div class="nav-links">
+                <a href="../">← Portfolio</a>
+                <a href="#features">Features</a>
+                <a href="#download">Download</a>
+                <a href="#install">Install</a>
+            </div>
+            <div class="theme-switcher">
+                <button class="theme-toggle" id="themeToggle" aria-label="Change theme">
+                    <svg class="theme-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/></svg>
+                </button>
+                <div class="theme-dropdown" id="themeDropdown">
+                    <button class="theme-option" data-theme="default">
+                        <span class="theme-preview default"></span>
+                        Midnight Purple
+                    </button>
+                    <button class="theme-option" data-theme="matrix">
+                        <span class="theme-preview matrix"></span>
+                        Matrix
+                    </button>
+                    <button class="theme-option" data-theme="gruvbox">
+                        <span class="theme-preview gruvbox"></span>
+                        Gruvbox
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero app-hero" id="hero">
+        <div class="hero-bg">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        <div class="app-hero-content">
+            <div class="app-hero-text">
+                <span class="app-eyebrow">
+                    <span class="app-eyebrow-dot"></span>
+                    Desktop app · macOS &amp; Windows · Free
+                </span>
+                <h1 class="app-title">SoloTrainer</h1>
+                <p class="app-subtitle">Slow it down. Nail the part.</p>
+                <p class="app-tagline">
+                    A practice app for musicians. Drop in a file or paste a <em>YouTube link</em>,
+                    slow it down without changing pitch, loop the tricky bars, and let
+                    <em>Trainer mode</em> ramp you up to full speed.
+                </p>
+
+                <div class="download-row" id="downloadRow">
+                    <a class="btn btn-primary btn-download" id="dlPrimary"
+                       href="https://github.com/Beekasha/SoloTrainer-releases/releases/latest"
+                       target="_blank" rel="noopener">
+                        <span class="dl-icon" id="dlPrimaryIcon"></span>
+                        <span class="dl-label">
+                            <span class="dl-label-main" id="dlPrimaryLabel">Download</span>
+                            <span class="dl-label-sub" id="dlPrimarySub">Latest release</span>
+                        </span>
+                    </a>
+                    <a class="btn btn-secondary btn-download" id="dlSecondary"
+                       href="https://github.com/Beekasha/SoloTrainer-releases/releases/latest"
+                       target="_blank" rel="noopener">
+                        <span class="dl-icon" id="dlSecondaryIcon"></span>
+                        <span class="dl-label">
+                            <span class="dl-label-main" id="dlSecondaryLabel">Other platform</span>
+                            <span class="dl-label-sub" id="dlSecondarySub">&nbsp;</span>
+                        </span>
+                    </a>
+                </div>
+                <p class="app-meta">
+                    <span id="releaseVersion" class="release-chip">Latest release</span>
+                    <a href="https://github.com/Beekasha/SoloTrainer-releases/releases" target="_blank" rel="noopener">All releases &amp; changelog →</a>
+                </p>
+            </div>
+
+            <!-- App window mock -->
+            <div class="app-window reveal-up">
+                <div class="aw-titlebar">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="aw-filename">solo_take.mp3</span>
+                </div>
+                <div class="aw-body">
+                    <div class="aw-waveform" id="awWaveform">
+                        <div class="aw-loop" aria-hidden="true"></div>
+                        <div class="aw-bars" id="awBars"></div>
+                        <div class="aw-playhead" aria-hidden="true"></div>
+                    </div>
+                    <div class="aw-controls">
+                        <span class="aw-chip"><span class="aw-chip-key">Speed</span> 75%</span>
+                        <span class="aw-chip"><span class="aw-chip-key">Pitch</span> −2</span>
+                        <span class="aw-chip aw-chip-accent"><span class="aw-chip-key">Loop</span> A–B</span>
+                        <span class="aw-chip aw-chip-muted">▶ 1:24 / 3:58</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="section-content">
+            <h2 class="section-title">
+                <span class="title-accent">01.</span> What it does
+            </h2>
+            <div class="feature-grid">
+                <div class="feature-card feature-flagship reveal-up">
+                    <span class="feature-badge">Trainer mode</span>
+                    <span class="feature-icon">🚀</span>
+                    <h3>Ramp up to speed, pass by pass</h3>
+                    <p>Pick a loop and SoloTrainer plays it back faster every time around — 50%, 60%, 70%… all the way up to full tempo. It's the classic way to build a fast solo into your hands. Set your start, target, and step, then just keep playing.</p>
+                </div>
+                <div class="feature-card feature-flagship reveal-up" style="--delay: 0.08s">
+                    <span class="feature-badge">Most requested</span>
+                    <span class="feature-icon">▶️</span>
+                    <h3>Load straight from YouTube</h3>
+                    <p>Paste a YouTube link and SoloTrainer pulls the audio right in — no separate downloader, no sketchy converter site. From a link to looping the solo in seconds.</p>
+                </div>
+                <div class="feature-card reveal-up" style="--delay: 0.16s">
+                    <span class="feature-icon">🐢</span>
+                    <h3>Speed without pitch</h3>
+                    <p>Slow a track from 25% to 150% to catch every note — the pitch stays exactly where it was.</p>
+                </div>
+                <div class="feature-card reveal-up" style="--delay: 0.24s">
+                    <span class="feature-icon">🎚️</span>
+                    <h3>Pitch without speed</h3>
+                    <p>Transpose ±12 semitones to match alternate tunings or sing it in your key — tempo stays put.</p>
+                </div>
+                <div class="feature-card reveal-up" style="--delay: 0.32s">
+                    <span class="feature-icon">🔁</span>
+                    <h3>A–B looping</h3>
+                    <p>Drop a start and end point right on the waveform and loop a tricky passage until it's locked in.</p>
+                </div>
+                <div class="feature-card reveal-up" style="--delay: 0.4s">
+                    <span class="feature-icon">📍</span>
+                    <h3>Section markers</h3>
+                    <p>Drop color-coded markers for verse, chorus, and solo, then jump between them with a keystroke.</p>
+                </div>
+                <div class="feature-card reveal-up" style="--delay: 0.48s">
+                    <span class="feature-icon">〰️</span>
+                    <h3>Full waveform view</h3>
+                    <p>A scrollable waveform with a compact overview, live playhead, and your loop region overlaid.</p>
+                </div>
+                <div class="feature-card reveal-up" style="--delay: 0.56s">
+                    <span class="feature-icon">🎵</span>
+                    <h3>Drag &amp; drop any file</h3>
+                    <p>Load MP3, WAV, M4A, AAC, or FLAC. Drop it in, click the waveform to seek, and start practicing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="section download-section" id="download">
+        <div class="section-content">
+            <h2 class="section-title">
+                <span class="title-accent">02.</span> Download
+            </h2>
+            <div class="platform-grid">
+                <!-- macOS -->
+                <div class="platform-card reveal-up" id="cardMac">
+                    <div class="platform-head">
+                        <span class="platform-logo">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.377 0-2.332-1.26-3.428-2.8-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.85-1.01.613 0 2.792.06 4.22 2.12-.11.07-2.358 1.38-2.358 4.13 0 3.21 2.852 4.34 2.927 4.36z"/></svg>
+                        </span>
+                        <div>
+                            <h3>macOS</h3>
+                            <span class="platform-sub" id="macSub">Apple disk image (.dmg)</span>
+                        </div>
+                        <span class="platform-badge" id="macBadge" hidden>For you</span>
+                    </div>
+                    <a class="btn btn-primary platform-btn" id="dlMac"
+                       href="https://github.com/Beekasha/SoloTrainer-releases/releases/latest/download/SoloTrainer.dmg"
+                       target="_blank" rel="noopener">Download for Mac</a>
+                    <ol class="install-steps">
+                        <li>Open the downloaded <code>SoloTrainer.dmg</code>.</li>
+                        <li>Drag <strong>SoloTrainer</strong> into your <strong>Applications</strong> folder.</li>
+                        <li>First launch: <strong>right-click → Open</strong>, then confirm. (macOS asks once because the app isn't notarized.)</li>
+                    </ol>
+                </div>
+
+                <!-- Windows -->
+                <div class="platform-card reveal-up" id="cardWin" style="--delay: 0.1s">
+                    <div class="platform-head">
+                        <span class="platform-logo">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+                        </span>
+                        <div>
+                            <h3>Windows</h3>
+                            <span class="platform-sub" id="winSub">64-bit installer (.exe)</span>
+                        </div>
+                        <span class="platform-badge" id="winBadge" hidden>For you</span>
+                    </div>
+                    <a class="btn btn-primary platform-btn" id="dlWin"
+                       href="https://github.com/Beekasha/SoloTrainer-releases/releases/latest"
+                       target="_blank" rel="noopener">Download for Windows</a>
+                    <ol class="install-steps">
+                        <li>Run the downloaded <code>SoloTrainer&hellip;-setup.exe</code>.</li>
+                        <li>If Windows SmartScreen appears: click <strong>More info → Run anyway</strong>.</li>
+                        <li>Follow the installer, then launch <strong>SoloTrainer</strong> from the Start menu.</li>
+                    </ol>
+                    <p class="alt-link"><a id="dlWinMsi" href="https://github.com/Beekasha/SoloTrainer-releases/releases/latest" target="_blank" rel="noopener">Prefer an MSI? Download the .msi installer →</a></p>
+                </div>
+            </div>
+            <p class="download-note">
+                Updates are built in — once installed, SoloTrainer checks for and applies new versions automatically.
+            </p>
+        </div>
+    </section>
+
+    <!-- Install / Shortcuts Section -->
+    <section class="section" id="install">
+        <div class="section-content">
+            <h2 class="section-title">
+                <span class="title-accent">03.</span> Handy shortcuts
+            </h2>
+            <div class="shortcuts-grid">
+                <div class="shortcut-group reveal-up">
+                    <h3 class="shortcut-title">Transport</h3>
+                    <ul class="shortcut-list">
+                        <li><kbd>Space</kbd><span>Play / Pause</span></li>
+                        <li><kbd>←</kbd> <kbd>→</kbd><span>Seek ±5s</span></li>
+                        <li><kbd>Home</kbd> <kbd>End</kbd><span>Jump to start / end</span></li>
+                    </ul>
+                </div>
+                <div class="shortcut-group reveal-up" style="--delay: 0.08s">
+                    <h3 class="shortcut-title">Speed &amp; pitch</h3>
+                    <ul class="shortcut-list">
+                        <li><kbd>↑</kbd> <kbd>↓</kbd><span>Speed ±5%</span></li>
+                        <li><kbd>1</kbd>–<kbd>9</kbd><span>Speed presets</span></li>
+                        <li><kbd>+</kbd> <kbd>−</kbd><span>Pitch ±1 semitone</span></li>
+                    </ul>
+                </div>
+                <div class="shortcut-group reveal-up" style="--delay: 0.16s">
+                    <h3 class="shortcut-title">Looping</h3>
+                    <ul class="shortcut-list">
+                        <li><kbd>[</kbd> <kbd>]</kbd><span>Set loop A / B</span></li>
+                        <li><kbd>L</kbd><span>Toggle loop</span></li>
+                        <li><kbd>C</kbd><span>Clear loop</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>SoloTrainer — designed &amp; built by Brian Kleiner</p>
+        <p class="footer-note">
+            <a href="../">← Back to portfolio</a>
+        </p>
+    </footer>
+
+    <script src="solotrainer.js"></script>
+</body>
+</html>

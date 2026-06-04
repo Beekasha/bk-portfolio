@@ -495,6 +495,67 @@ kbd {
 
 .footer a:hover { opacity: 0.8; }
 
+/* Buy Me a Coffee — nav button (always visible, no scroll needed) */
+.bmc-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    padding: 0.5rem 0.9rem;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1a1a25 !important;
+    background: #ffdd00;
+    border-radius: 8px;
+    flex-shrink: 0;
+    transition: var(--transition-fast);
+}
+
+.bmc-nav:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(255, 221, 0, 0.3);
+    opacity: 1;
+}
+
+/* Sit the theme switcher right beside the coffee button instead of far right */
+.nav .theme-switcher {
+    margin-left: 0.75rem;
+}
+
+/* Buy Me a Coffee — footer button */
+.footer-support {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.bmc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1.4rem;
+    margin-bottom: 1.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a1a25 !important;
+    background: #ffdd00;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(255, 221, 0, 0.25);
+    transition: var(--transition-fast);
+}
+
+.bmc-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255, 221, 0, 0.35);
+    opacity: 1;
+}
+
+.bmc-icon {
+    width: 20px;
+    height: 20px;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 900px) {
     .app-hero-content {
@@ -517,4 +578,8 @@ kbd {
     .download-row { flex-direction: column; }
 
     .btn-download { width: 100%; justify-content: center; }
+
+    /* Collapse the nav coffee button to icon-only to save space */
+    .bmc-nav-label { display: none; }
+    .bmc-nav { padding: 0.5rem; gap: 0; }
 }
